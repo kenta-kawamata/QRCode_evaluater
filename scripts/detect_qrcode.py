@@ -16,8 +16,15 @@ def detect_qr():
         img = cv2.putText(img, s, p[0].astype(int),
             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
+    #print(points[0][2][1])
+    y1 = int(points[0][0][0])
+    y2 = int(points[0][2][0])
+    x1 = int(points[0][0][1])
+    x2 = int(points[0][2][1])
 
-    cv2.imshow("qr code",img)
+    trimed_img = img[y1:y2,x1:x2]
+
+    cv2.imshow("qr code",trimed_img)
     cv2.waitKey(0)
 
 
