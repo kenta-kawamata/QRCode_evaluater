@@ -51,10 +51,12 @@ def detect_qr(img):
             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
     #print(points[0][2][1])
-    y1 = int(points[0][0][0])
-    y2 = int(points[0][2][0])
-    x1 = int(points[0][0][1])
-    x2 = int(points[0][2][1])
+    # When the image that read from Pillow
+    # the image's coordinate X Y is reverse.
+    x1 = int(points[0][0][0])
+    x2 = int(points[0][2][0])
+    y1 = int(points[0][0][1])
+    y2 = int(points[0][2][1])
 
     trimed_img = img[y1:y2,x1:x2]
 
@@ -64,16 +66,7 @@ def detect_qr(img):
 def detect_qr_using_pyzbar(img):
 
     decoded_list = decode(img)
-
-    print(type(decoded_list))
-    # <class 'list'>
-    
-    print(len(decoded_list))
-    # 3
-    
-    print(type(decoded_list[0]))
-    # <class 'pyzbar.pyzbar.Decoded'>
-    
+   
     print(decoded_list[0])
 
 
