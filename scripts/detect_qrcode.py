@@ -22,19 +22,20 @@ def output_hog_featurers(image):
                 bins = 9,
                 range = (0,1),
                 color ='Blue')
+    plt.show()
 
     #HOG in image
-    #fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4), sharex=True, sharey=True)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4), sharex=True, sharey=True)
 
-    #ax1.axis('off')
-    #ax1.imshow(image, cmap=plt.cm.gray)
-    #ax1.set_title('Input image')
+    ax1.axis('off')
+    ax1.imshow(image, cmap=plt.cm.gray)
+    ax1.set_title('Input image')
 
-    #hog_image_rescaled = exposure.rescale_intensity(hog_image, in_range=(0, 10))
+    hog_image_rescaled = exposure.rescale_intensity(hog_image, in_range=(0, 10))
 
-    #ax2.axis('off')
-    #ax2.imshow(hog_image_rescaled, cmap=plt.cm.gray)
-    #ax2.set_title('Histogram of Oriented Gradients')
+    ax2.axis('off')
+    ax2.imshow(hog_image_rescaled, cmap=plt.cm.gray)
+    ax2.set_title('Histogram of Oriented Gradients')
     plt.show()
 
 
@@ -50,13 +51,18 @@ def detect_qr(img):
         img = cv2.putText(img, s, p[0].astype(int),
             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
-    #print(points[0][2][1])
+    print(points[0])
     # When the image that read from Pillow
     # the image's coordinate X Y is reverse.
-    x1 = int(points[0][0][0])
-    x2 = int(points[0][2][0])
-    y1 = int(points[0][0][1])
-    y2 = int(points[0][2][1])
+    x = points[0][:,0]
+    y = points[0][:,1]
+
+    margin = 1
+    
+    x1 = int(np.amin(x)-margin)
+    x2 = int(np.amax(x)+margin)
+    y1 = int(np.amin(y)-margin)
+    y2 = int(np.amax(y)+margin)
 
     trimed_img = img[y1:y2,x1:x2]
 
@@ -93,12 +99,12 @@ def main():
     img = Image.open('./../qr_code.png')
     img = pil2cv(img)
 
-    img = cv2.resize(img,None,fx=0.4,fy=0.4)
+    img = cv2.resize(img,None,fx=1,fy=1)
 
     detect_qr_using_pyzbar(img)
 
-    #trimed_img = detect_qr(img)
-    #output_hog_featurers(trimed_img)
+    trimed_img = detect_qr(img)
+    output_hog_featurers(trimed_img)
 
     #cv2.imshow("qr code",trimed_img)
     #cv2.waitKey(0)
