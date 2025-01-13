@@ -2,8 +2,9 @@
 
 ## 動作確認済みの環境
 
-|||
-|python|3.8, 3.11|
+|Name|Version|
+|:---:|:---:|  
+| python | 3.8,3.11 |
 
 
 ## How to setup the env that use this code
